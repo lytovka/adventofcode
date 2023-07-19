@@ -9,7 +9,7 @@ const rucksackWithItems = rucksacks.map((rucksack) => [
 ]);
 
 const ruckSackCommonItems = rucksackWithItems
-  .map((rucksack) => findCommonCharacters(rucksack[0], rucksack[1]))
+  .map((rucksack) => findCommonCharacters(...rucksack))
   .flat();
 
 const ruckSackCommonValuesTotal = ruckSackCommonItems

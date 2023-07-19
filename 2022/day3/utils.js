@@ -3,11 +3,12 @@ const A_code = "A".charCodeAt();
 
 const medianPos = (strLen) => Math.floor(strLen / 2);
 
-const findCommonCharacters = (str1, str2) => {
+const findCommonCharacters = (...strings) => {
   const commonCharacters = new Set();
+  const [str1, ...restStrings] = strings;
   const str1Chars = str1.split("");
   for (let c of str1Chars) {
-    if (str2.includes(c)) {
+    if (restStrings.map((str) => str.includes(c)).every((b) => b)) {
       commonCharacters.add(c);
     }
   }
@@ -20,4 +21,12 @@ const charVal = (char) => {
     : char.charCodeAt() - A_code + 27;
 };
 
-export { medianPos, findCommonCharacters, charVal };
+const groupBy = (arr, itemsInGroup) => {
+  const groups = [];
+  for (let i = 0; i < arr.length; i += itemsInGroup) {
+    groups.push(arr.slice(i, i + itemsInGroup));
+  }
+  return groups;
+};
+
+export { medianPos, findCommonCharacters, charVal, groupBy };
