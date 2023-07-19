@@ -1,5 +1,4 @@
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import input from "./input.js";
 
 const winLoseDrawScores = {
   WIN: 6,
@@ -31,7 +30,6 @@ const myWinningRules = {
   Z: "B",
 };
 
-const input = readFileSync(resolve("input.txt"), "utf-8");
 const rounds = input
   .trim()
   .split("\n")
@@ -55,4 +53,3 @@ const scores = winLoseDrawStats.map(
 const totalScore = scores.reduce((acc, score) => acc + score);
 
 console.log(totalScore);
-

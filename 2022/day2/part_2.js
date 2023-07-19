@@ -1,5 +1,4 @@
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import input from "./input.js";
 
 const winLoseDrawScores = {
   WIN: 6,
@@ -25,7 +24,6 @@ const losingMapping = {
   C: "B",
 };
 
-const input = readFileSync(resolve("input.txt"), "utf-8");
 const rounds = input
   .trim()
   .split("\n")

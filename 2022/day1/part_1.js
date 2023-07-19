@@ -1,11 +1,6 @@
-import path from "path";
-import fs from "fs";
-
-const input = fs.readFileSync(path.resolve("input.txt"), "utf-8");
+import input from "./input.js";
 
 const groups = input.trim().split("\n\n");
-
-console.log(groups);
 
 const groupsAccumulatedCalories = groups.map((group) =>
   group
