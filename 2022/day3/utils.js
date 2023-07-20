@@ -21,7 +21,7 @@ const charVal = (char) => {
     : char.charCodeAt() - A_code + 27;
 };
 
-const groupBy = (arr, itemsInGroup) => {
+const breakIntoGroupsOf = (arr, itemsInGroup) => {
   const groups = [];
   for (let i = 0; i < arr.length; i += itemsInGroup) {
     groups.push(arr.slice(i, i + itemsInGroup));
@@ -29,4 +29,4 @@ const groupBy = (arr, itemsInGroup) => {
   return groups;
 };
 
-export { medianPos, findCommonCharacters, charVal, groupBy };
+export { medianPos, findCommonCharacters, charVal, breakIntoGroupsOf };
