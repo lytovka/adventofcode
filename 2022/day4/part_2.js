@@ -1,7 +1,7 @@
 import input from "./input.js";
-import { isSubset } from "./utils.js";
+import { hasIntersection } from "./utils.js";
 
-const pairs = input
+const ranges = input
   .trim()
   .split("\n")
   .map((line) =>
@@ -12,6 +12,8 @@ const pairs = input
       )
   );
 
-const pairsWithSubsets = pairs.filter(([a, b]) => isSubset(a, b));
+console.log(ranges);
 
-console.log(pairsWithSubsets.length);
+const rangesIntersected = ranges.filter(([a, b]) => hasIntersection(a, b));
+
+console.log(rangesIntersected.length);
