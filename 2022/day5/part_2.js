@@ -13,10 +13,8 @@ parseAndSaveScheme(scheme, stacks);
 const parsedMoves = parseMoves(rawMoves);
 
 parsedMoves.forEach(({ quantity, from, to }) => {
-  for (let q = 0; q < quantity; q++) {
-    let cratesToMove = stacks[from].pop();
-    stacks[to].push(cratesToMove);
-  }
+  const cratesToMove = stacks[from].splice(-quantity);
+  stacks[to].push(...cratesToMove);
 });
 
 const solution = stacks
