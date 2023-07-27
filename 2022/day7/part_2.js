@@ -29,6 +29,8 @@ for (const line of restLines) {
 }
 
 filesystem.findDirectorySizes();
-const filtered = filesystem.filterDirectoriesBySize(100_000, "desc");
+// filesystem.printTree();
 
-console.log(filtered.reduce((acc, node) => acc + node.size, 0));
+const requiredToFreeUp = UPDATE_DISK_SPACE - filesystem.freeDiskSpace;
+const filtered = filesystem.filterDirectoriesBySize(requiredToFreeUp, "asc");
+console.log(filtered.sort((node1, node2) => node1.size - node2.size)[0].size);
