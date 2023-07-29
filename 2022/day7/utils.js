@@ -75,7 +75,8 @@ class FileSystem {
 
   build(input) {
     for (const line of input) {
-      if (this.isCommand(line)) {
+      // commands
+      if (line.startsWith("$")) {
         const [_$, command, value] = line.split(/\s+/);
 
         switch (command) {
@@ -101,7 +102,8 @@ class FileSystem {
           }
         }
       }
-      if (this.isFile(line)) {
+      // files
+      if (!Number.isNaN(parseInt(line.split(/\s+/)[0]))) {
         const [size, fileName] = line.split(/\s+/);
         const newFile = new File(fileName, this.currentNode, parseInt(size));
         this.currentNode.setChildren(newFile);
@@ -158,12 +160,6 @@ class FileSystem {
       }
     }
   }
-
-  isCommand = (line) => line.startsWith("$");
-  isDirectory = (line) => line.startsWith("dir");
-  isFile = (line) => !Number.isNaN(parseInt(line.split(/\s+/)[0]));
 }
 
-const UPDATE_DISK_SPACE = 30_000_000;
-
-export { UPDATE_DISK_SPACE, FileSystem, Directory, File };
+export { FileSystem, Directory, File };

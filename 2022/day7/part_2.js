@@ -1,5 +1,5 @@
 import input from "./input.js";
-import { FileSystem, Directory, UPDATE_DISK_SPACE } from "./utils.js";
+import { FileSystem, Directory } from "./utils.js";
 
 const lines = input.split("\n");
 
@@ -8,6 +8,7 @@ filesystem.printFileSystem();
 
 const dirs = [...filesystem].filter((node) => node instanceof Directory);
 
-const requiredToFreeUp = UPDATE_DISK_SPACE - filesystem.freeDiskSpace;
+const UPDATE_SIZE = 30_000_000;
+const requiredToFreeUp = UPDATE_SIZE - filesystem.freeDiskSpace;
 const candidateDirs = dirs.filter((dir) => dir.size > requiredToFreeUp);
 console.log(candidateDirs.sort((dir1, dir2) => dir1.size - dir2.size)[0].size);
