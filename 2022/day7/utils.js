@@ -182,4 +182,4 @@ class FileSystem {
 
 const UPDATE_DISK_SPACE = 30_000_000;
 
-export { UPDATE_DISK_SPACE, FileSystem as FileSystem2 };
+export { UPDATE_DISK_SPACE, FileSystem };
