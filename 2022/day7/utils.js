@@ -140,39 +140,23 @@ class FileSystem {
     return;
   }
 
-  filterDirectoriesBySize(size, option) {
-    this.currentNode = this.root;
-    if (option === "asc") return this.#filterDirectoriesBySizeAscending(size);
-    if (option === "desc") return this.#filterDirectoriesBySizeDescending(size);
-    throw new Error(`Invalid option: ${option}`);
-  }
+  // Add the Symbol.iterator method to make the instance iterable
+  *[Symbol.iterator]() {
+    // Perform a depth-first traversal of the file system
+    const stack = [this.root];
 
-  #filterDirectoriesBySizeAscending(size, accumulator = []) {
-    if (this.currentNode instanceof Directory) {
-      const children = this.currentNode.getChildren();
-      for (const child of children) {
-        if (child instanceof Directory && child.size >= size) {
-          accumulator.push(child);
-        }
-        this.setCurrentNode(child);
-        this.#filterDirectoriesBySizeAscending(size, accumulator);
+    while (stack.length > 0) {
+      const node = stack.pop();
+
+      if (node instanceof File) {
+        yield node;
+      } else if (node instanceof Directory) {
+        yield node;
+        // Since we want to traverse from left to right (child to parent),
+        // we add children to the stack in reverse order
+        stack.push(...node.getChildren().reverse());
       }
     }
-    return accumulator;
-  }
-
-  #filterDirectoriesBySizeDescending(size, accumulator = []) {
-    if (this.currentNode instanceof Directory) {
-      const children = this.currentNode.getChildren();
-      for (const child of children) {
-        if (child instanceof Directory && child.size <= size) {
-          accumulator.push(child);
-        }
-        this.setCurrentNode(child);
-        this.#filterDirectoriesBySizeDescending(size, accumulator);
-      }
-    }
-    return accumulator;
   }
 
   isCommand = (line) => line.startsWith("$");
@@ -182,4 +166,4 @@ class FileSystem {
 
 const UPDATE_DISK_SPACE = 30_000_000;
 
-export { UPDATE_DISK_SPACE, FileSystem };
+export { UPDATE_DISK_SPACE, FileSystem, Directory, File };
