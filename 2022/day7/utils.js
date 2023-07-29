@@ -1,61 +1,63 @@
 class Node {
-  constructor(name, size = 0) {
+  name;
+  size;
+  parent;
+
+  constructor(name, parent = null, size = 0) {
     this.name = name;
     this.size = size;
+    this.parent = parent;
+  }
+  /**
+   * @param {number} size
+   */
+  set size(size) {
+    this.size = size;
+  }
+  get size() {
+    return this.size;
+  }
+
+  get parent() {
+    return this.parent;
   }
 }
 
 class File extends Node {
   constructor(name, parent, size) {
-    super(name, size);
-    this.parent = parent;
+    super(name, parent, size);
   }
 
   toString() {
-    return this.name + " (dir," + "size=" + this.getSize() + ")";
-  }
-
-  setSize(size) {
-    this.size = size;
-  }
-
-  getSize() {
-    return this.size;
-  }
-
-  getParent() {
-    return this.parent;
+    return this.name + " (dir," + "size=" + this.size + ")";
   }
 }
 
 class Directory extends Node {
+  contents;
+
   constructor(name, parent) {
-    super(name);
-    this.parent = parent;
-    this.children = [];
+    super(name, parent);
+    this.contents = [];
   }
 
   setSize() {
     let finalSize = 0;
-    for (let child of this.getChildren()) {
-      if (child instanceof File) finalSize += child.getSize();
-      if (child instanceof Directory) finalSize += child.setSize();
+    for (let c of this.getContents()) {
+      if (c instanceof File) finalSize += c.size;
+      if (c instanceof Directory) finalSize += c.setSize();
     }
     this.size = finalSize;
     return finalSize;
   }
 
-  getParent() {
-    return this.parent;
+  getContents() {
+    return this.contents;
   }
 
-  getChildren() {
-    return this.children;
-  }
-
-  setChildren(ch) {
+  setContents(contents) {
     // this.children.push(...ch);
-    this.children.push(ch);
+    this.contents.push(contents);
   }
 }
 
@@ -88,12 +90,12 @@ class FileSystem {
               continue;
             }
             if (value === "..") {
-              this.currentNode = this.currentNode.getParent();
+              this.currentNode = this.currentNode.parent;
 
               continue;
             } else {
               const newDir = new Directory(value, this.currentNode);
-              this.currentNode.setChildren(newDir);
+              this.currentNode.setContents(newDir);
               this.currentNode = newDir;
             }
           }
@@ -106,7 +108,7 @@ class FileSystem {
       if (!Number.isNaN(parseInt(line.split(/\s+/)[0]))) {
         const [size, fileName] = line.split(/\s+/);
         const newFile = new File(fileName, this.currentNode, parseInt(size));
-        this.currentNode.setChildren(newFile);
+        this.currentNode.setContents(newFile);
 
         continue;
       }
@@ -129,10 +131,10 @@ class FileSystem {
           this.currentNode.setSize() +
           ")"
       );
-      const children = this.currentNode.getChildren();
-      if (!Array.isArray(children) || children.length === 0) return;
-      for (const child of children) {
-        this.setCurrentNode(child);
+      const contents = this.currentNode.getContents();
+      if (!Array.isArray(contents) || contents.length === 0) return;
+      for (const c of contents) {
+        this.setCurrentNode(c);
         this.printFileSystem(depth + 1);
       }
     }
@@ -156,7 +158,7 @@ class FileSystem {
         yield node;
         // Since we want to traverse from left to right (child to parent),
         // we add children to the stack in reverse order
-        stack.push(...node.getChildren().reverse());
+        stack.push(...node.getContents().reverse());
       }
     }
   }
