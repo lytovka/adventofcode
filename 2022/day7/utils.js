@@ -11,8 +11,8 @@ class File extends Node {
     this.parent = parent;
   }
 
-  print() {
-    console.log(this.name + " (dir," + "size=" + this.getSize() + ")");
+  toString() {
+    return this.name + " (dir," + "size=" + this.getSize() + ")";
   }
 
   setSize(size) {
@@ -135,14 +135,7 @@ class FileSystem {
       }
     }
     if (this.currentNode instanceof File) {
-      console.log(
-        indentation +
-          this.currentNode.name +
-          " (file," +
-          "size=" +
-          this.currentNode.size +
-          ")"
-      );
+      console.log(indentation + this.currentNode.toString());
     }
     return;
   }
