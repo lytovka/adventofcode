@@ -1,34 +1,19 @@
 import input from "./input.js";
-import { isCommand, isFile, FileSystem, UPDATE_DISK_SPACE } from "./utils.js";
+import { FileSystem, Directory } from "./utils.js";
 
 const lines = input.split("\n");
-const [, ...restLines] = lines;
 
-let filesystem = new FileSystem();
+let filesystem = new FileSystem(lines);
+filesystem.printFileSystem();
 
-for (const line of restLines) {
-  if (isCommand(line)) {
-    const [_$, command, value] = line.split(/\s+/);
+const dirs = [...filesystem].filter((node) => node instanceof Directory);
 
-    switch (command) {
-      case "cd": {
-        filesystem.cd(value);
-      }
-      case "ls": {
-        // filesystem.ls();
-        continue;
-      }
-    }
-    continue;
-  }
-  if (isFile(line)) {
-    const [size, fileName] = line.split(/\s+/);
-    filesystem.touch(fileName, size);
-    continue;
+let res = 0;
+for (let localDir of dirs) {
+  let size = localDir.size;
+  if (size < 100_000) {
+    res += size;
   }
 }
 
-filesystem.findDirectorySizes();
-const filtered = filesystem.filterDirectoriesBySize(100_000, "desc");
-
-console.log(filtered.reduce((acc, node) => acc + node.size, 0));
+console.log(res);

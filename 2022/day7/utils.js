@@ -1,155 +1,167 @@
-const defaultOptions = {
-  type: "f", // `f` or `d`
-  size: 0,
-};
+class Node {
+  name;
+  size;
+  parent;
 
-class TreeNode {
-  constructor(name, parent, options = defaultOptions) {
+  constructor(name, parent = null, size = 0) {
     this.name = name;
-    this.type = options.type;
-    this.children = [];
+    this.size = size;
     this.parent = parent;
-    this.size = options.size;
   }
-
-  getParent() {
-    return this.parent;
-  }
-
-  getChildren() {
-    return this.children;
-  }
-
-  setChildren(nodes) {
-    if (this.type === "d") {
-      if (Array.isArray(nodes)) {
-        this.children.push(...nodes);
-      } else {
-        this.children.push(nodes);
-      }
-    }
-  }
-
-  setSize(size) {
+  /**
+   * @param {number} size
+   */
+  set size(size) {
     this.size = size;
   }
-
-  printTree(node = this, depth = 0) {
-    const indentation = ".".repeat(depth * 2) + "- ";
-    console.log(
-      indentation + node.name + " (" + node.type + ", size=" + node.size + ")"
-    );
-    const children = node.getChildren();
-    if (!Array.isArray(children) || children.length === 0) return;
-    for (const child of children) {
-      this.printTree(child, depth + 1);
-    }
+  get size() {
+    return this.size;
   }
 
-  findDirectorySizes(node = this) {
-    const children = node.getChildren();
-    if (!Array.isArray(children) || children.length === 0)
-      return this.size || 0;
-    let local_size = 0;
-    for (const child of children) {
-      if (child.type === "d") {
-        local_size += this.findDirectorySizes(child, local_size);
-      } else {
-        local_size += child.size;
-      }
-    }
-    node.setSize(local_size);
-    return local_size;
-  }
-
-  filterDirectoriesBySize(size, option) {
-    if (option === "asc") return this.#filterDirectoriesBySizeAscending(size);
-    if (option === "desc") return this.#filterDirectoriesBySizeDescending(size);
-    throw new Error(`Invalid option: ${option}`);
-  }
-
-  #filterDirectoriesBySizeAscending(size, node = this, accumulator = []) {
-    const children = node.getChildren();
-    if (!Array.isArray(children) || children.length === 0) return;
-    for (const child of children) {
-      if (child.type === "d" && child.size >= size) {
-        accumulator.push(child);
-      }
-      this.#filterDirectoriesBySizeAscending(size, child, accumulator);
-    }
-    return accumulator;
-  }
-
-  #filterDirectoriesBySizeDescending(size, node = this, accumulator = []) {
-    const children = node.getChildren();
-    if (!Array.isArray(children) || children.length === 0) return;
-    for (const child of children) {
-      if (child.type === "d" && child.size <= size) {
-        accumulator.push(child);
-      }
-      this.#filterDirectoriesBySizeDescending(size, child, accumulator);
-    }
-    return accumulator;
+  get parent() {
+    return this.parent;
   }
 }
 
-const DISK_SPACE = 70_000_000;
+class File extends Node {
+  constructor(name, parent, size) {
+    super(name, parent, size);
+  }
+
+  toString() {
+    return this.name + " (dir," + "size=" + this.size + ")";
+  }
+}
+
+class Directory extends Node {
+  contents;
+
+  constructor(name, parent) {
+    super(name, parent);
+    this.contents = [];
+  }
+
+  setSize() {
+    let finalSize = 0;
+    for (let c of this.getContents()) {
+      if (c instanceof File) finalSize += c.size;
+      if (c instanceof Directory) finalSize += c.setSize();
+    }
+    this.size = finalSize;
+    return finalSize;
+  }
+
+  getContents() {
+    return this.contents;
+  }
+
+  setContents(contents) {
+    // this.children.push(...ch);
+    this.contents.push(contents);
+  }
+}
 
 class FileSystem {
-  constructor() {
-    this.root = new TreeNode("root", null, { type: "d" });
-    this.currentNode = this.root;
-    this.occupiedDiskSpace = this.root.size;
-    this.totalDiskSpace = DISK_SPACE;
+  root;
+  currentNode;
+  totalDiskSpace;
+
+  constructor(input) {
+    this.build(input);
+    this.totalDiskSpace = 70_000_000;
   }
 
   get freeDiskSpace() {
-    return this.totalDiskSpace - this.occupiedDiskSpace;
+    return this.totalDiskSpace - this.root.size;
   }
 
-  cd(value) {
-    if (value === "..") {
-      this.currentNode = this.currentNode.getParent();
-    } else {
-      const newNode = new TreeNode(value, this.currentNode, {
-        type: "d",
-        size: 0,
-      });
-      this.currentNode.setChildren(newNode);
-      this.currentNode = newNode;
+  build(input) {
+    for (const line of input) {
+      // commands
+      if (line.startsWith("$")) {
+        const [_$, command, value] = line.split(/\s+/);
+
+        switch (command) {
+          case "cd": {
+            if (value === "/") {
+              this.root = new Directory("root", null);
+              this.currentNode = this.root;
+
+              continue;
+            }
+            if (value === "..") {
+              this.currentNode = this.currentNode.parent;
+
+              continue;
+            } else {
+              const newDir = new Directory(value, this.currentNode);
+              this.currentNode.setContents(newDir);
+              this.currentNode = newDir;
+            }
+          }
+          case "ls": {
+            continue;
+          }
+        }
+      }
+      // files
+      if (!Number.isNaN(parseInt(line.split(/\s+/)[0]))) {
+        const [size, fileName] = line.split(/\s+/);
+        const newFile = new File(fileName, this.currentNode, parseInt(size));
+        this.currentNode.setContents(newFile);
+
+        continue;
+      }
     }
+    this.currentNode = this.root;
   }
 
-  ls() {
-    return this.currentNode.getChildren();
+  setCurrentNode(node) {
+    this.currentNode = node;
   }
 
-  touch(fileName, size) {
-    this.currentNode.setChildren(
-      new TreeNode(fileName, this.currentNode, {
-        type: "f",
-        size: parseInt(size),
-      })
-    );
+  printFileSystem(depth = 0) {
+    const indentation = ".".repeat(depth * 2) + "- ";
+    if (this.currentNode instanceof Directory) {
+      console.log(
+        indentation +
+          this.currentNode.name +
+          " (dir," +
+          "size=" +
+          this.currentNode.setSize() +
+          ")"
+      );
+      const contents = this.currentNode.getContents();
+      if (!Array.isArray(contents) || contents.length === 0) return;
+      for (const c of contents) {
+        this.setCurrentNode(c);
+        this.printFileSystem(depth + 1);
+      }
+    }
+    if (this.currentNode instanceof File) {
+      console.log(indentation + this.currentNode.toString());
+    }
+    return;
   }
 
-  printTree() {
-    this.root.printTree();
-  }
+  // Add the Symbol.iterator method to make the instance iterable
+  *[Symbol.iterator]() {
+    // Perform a depth-first traversal of the file system
+    const stack = [this.root];
 
-  findDirectorySizes() {
-    this.root.findDirectorySizes();
-    this.occupiedDiskSpace = this.root.size;
-  }
+    while (stack.length > 0) {
+      const node = stack.pop();
 
-  filterDirectoriesBySize(size, option) {
-    return this.root.filterDirectoriesBySize(size, option);
+      if (node instanceof File) {
+        yield node;
+      } else if (node instanceof Directory) {
+        yield node;
+        // Since we want to traverse from left to right (child to parent),
+        // we add children to the stack in reverse order
+        stack.push(...node.getContents().reverse());
+      }
+    }
   }
 }
 
-const isCommand = (line) => line.startsWith("$");
-const isDirectory = (line) => line.startsWith("dir");
-const isFile = (line) => !Number.isNaN(parseInt(line.split(/\s+/)[0]));
-const UPDATE_DISK_SPACE = 30_000_000;
-
-export { isCommand, isDirectory, isFile, UPDATE_DISK_SPACE, FileSystem };
+export { FileSystem, Directory, File };
