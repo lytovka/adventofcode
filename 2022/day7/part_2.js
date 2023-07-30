@@ -1,36 +1,14 @@
 import input from "./input.js";
-import { isCommand, isFile, FileSystem, UPDATE_DISK_SPACE } from "./utils.js";
+import { FileSystem, Directory } from "./utils.js";
 
 const lines = input.split("\n");
-const [, ...restLines] = lines;
 
-let filesystem = new FileSystem();
+let filesystem = new FileSystem(lines);
+filesystem.printFileSystem();
 
-for (const line of restLines) {
-  if (isCommand(line)) {
-    const [_$, command, value] = line.split(/\s+/);
+const dirs = [...filesystem].filter((node) => node instanceof Directory);
 
-    switch (command) {
-      case "cd": {
-        filesystem.cd(value);
-      }
-      case "ls": {
-        // filesystem.ls();
-        continue;
-      }
-    }
-    continue;
-  }
-  if (isFile(line)) {
-    const [size, fileName] = line.split(/\s+/);
-    filesystem.touch(fileName, size);
-    continue;
-  }
-}
-
-filesystem.findDirectorySizes();
-// filesystem.printTree();
-
-const requiredToFreeUp = UPDATE_DISK_SPACE - filesystem.freeDiskSpace;
-const filtered = filesystem.filterDirectoriesBySize(requiredToFreeUp, "asc");
-console.log(filtered.sort((node1, node2) => node1.size - node2.size)[0].size);
+const UPDATE_SIZE = 30_000_000;
+const requiredToFreeUp = UPDATE_SIZE - filesystem.freeDiskSpace;
+const candidateDirs = dirs.filter((dir) => dir.size > requiredToFreeUp);
+console.log(candidateDirs.sort((dir1, dir2) => dir1.size - dir2.size)[0].size);
