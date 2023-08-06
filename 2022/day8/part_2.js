@@ -2,50 +2,50 @@ import input from "./input.js";
 
 const rows = input.trim().split("\n");
 
-let total = (rows.length + rows[0].length) * 2 - 4;
+let scenicScores = [];
 
 for (let i = 1; i < rows.length - 1; i++) {
-  for (let j = 1; j < rows[0].length - 1; j++) {
-    let isTaller1 = true;
-    let isTaller2 = true;
-    let isTaller3 = true;
-    let isTaller4 = true;
+  for (let j = 1; j < rows[i].length - 1; j++) {
+    let scenicLeft = 0;
+    let scenicTop = 0;
+    let scenicRight = 0;
+    let scenicBottom = 0;
 
     // left
     for (let k = j - 1; k >= 0; k--) {
+      scenicLeft += 1;
       if (rows[i][k] >= rows[i][j]) {
-        isTaller1 = false;
         break;
       }
     }
 
     // top
     for (let k = i - 1; k >= 0; k--) {
+      scenicTop += 1;
       if (rows[k][j] >= rows[i][j]) {
-        isTaller2 = false;
         break;
       }
     }
 
     // right
     for (let k = j + 1; k < rows.length; k++) {
+      scenicRight += 1;
       if (rows[i][k] >= rows[i][j]) {
-        isTaller3 = false;
         break;
       }
     }
 
     // bottom
     for (let k = i + 1; k < rows[0].length; k++) {
+      scenicBottom += 1;
       if (rows[k][j] >= rows[i][j]) {
-        isTaller4 = false;
         break;
       }
     }
-    if (isTaller1 || isTaller2 || isTaller3 || isTaller4) {
-      total += 1;
-    }
+
+    scenicScores.push(scenicLeft * scenicRight * scenicBottom * scenicTop);
   }
 }
 
-console.log(total);
+console.log(scenicScores);
+console.log(Math.max(...scenicScores));
