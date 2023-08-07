@@ -1,0 +1,11 @@
+import input from "./input.js";
+import {Grid2D} from "./utils.js";
+
+const grid = new Grid2D().build(input.trim());
+
+const uniqueTailPoints = new Set();
+grid.history.forEach((record) => {
+  uniqueTailPoints.add(`${record.t[0]}:${record.t[1]}`);
+});
+
+console.log(uniqueTailPoints.size);
