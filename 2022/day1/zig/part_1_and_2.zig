@@ -1,6 +1,6 @@
 const std = @import("std");
 
-var general_purpose_allocator = std.heap.GeneralPurposeAllocator(.{}){};
+var general_purpose_allocator = std.heap.GeneralPurposeAllocator(.{});
 const gpa = general_purpose_allocator.allocator();
 
 fn greaterThan(context: void, a: i32, b: i32) std.math.Order {
