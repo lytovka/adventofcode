@@ -23,4 +23,4 @@ const numbers = columns.map(c => {
 
 const sum = numbers.reduce((acc, n) => acc + n)
 
-console.log(sum)
+console.log(sum) // wrong answer (54305)
