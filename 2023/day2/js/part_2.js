@@ -1,36 +1,27 @@
 import input from "./input.js"
 
-const rows = input.trim().split("\n")
-const all = rows.map(row => row.split(":"))
+const gameEntries = input.trim().split("\n").map(row => row.split(":"))
+const sequenceRegex = /(\d+ (blue|green|red))/g
 
-const gamesIds = all.map(entry => entry[0])
-const gamesSequence = all.map(entry => entry[1])
+const gameStats = gameEntries.map(([id, sequence]) => {
+	const gameId = parseInt(id.match(/\d+/g)[0])
+	const sets = sequence.split(';').map(set => set.match(sequenceRegex))
+	const colors = {red: [], blue: [], green: []}
 
-const regex = /(\d+ (blue|green|red))/g
-
-const gameStats = []
-
-gamesIds.forEach(game => {
-	const id = parseInt(game.match(/\d+/g)[0])
-	gameStats.push({id})
-})
-
-const games = gamesSequence.map(sequence => sequence.split(";").map(set => set.match(regex)))
-
-games.forEach((sets, index) => {
-	const localGame = gameStats[index]
-	localGame.sets = {
-		red: {values: [], min: 0}, 
-		blue: {values: [], min: 0}, 
-		green: {values: [], min: 0}
-	}
 	sets.flat().forEach(valueColor => {
 		const [value, color] = valueColor.split(" ")
-		localGame.sets[color].values.push(parseInt(value))
+		colors[color].push(parseInt(value))
 	})
-	localGame.sets.red.min = Math.max(...localGame.sets.red.values)
-	localGame.sets.blue.min = Math.max(...localGame.sets.blue.values)
-	localGame.sets.green.min = Math.max(...localGame.sets.green.values)
+
+	return {
+		id: gameId,
+		sets: {
+			red: {values: colors.red, min: Math.max(...colors.red)},
+			blue: {values: colors.blue, min: Math.max(...colors.blue)},
+			green: {values: colors.green, min: Math.max(...colors.green)},
+		}
+	}
+
 })
 
 console.log(gameStats.reduce((acc, stats) => acc + (stats.sets.red.min * stats.sets.blue.min * stats.sets.green.min), 0))
