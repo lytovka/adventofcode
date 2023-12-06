@@ -1,10 +1,8 @@
-import input from "./input.js"
+import { input1, input } from "./input.js"
 
-const rows = input.trim().split("\n")
+const rows = input1.trim().split("\n")
 const numberRegex = /\d+/g
 const asteriskRegex = /\*/g 
-
-const partNumbers = []
 
 const rowsStats = rows.map(row => {
 	const numberMatches = [...row.matchAll(numberRegex)]
@@ -17,9 +15,5 @@ const rowsStats = rows.map(row => {
 	}
 })
 
-rowsStats.forEach((line, lIndex) => {
-	const surroundedNumbers = line.values.numbers.filter((_, index) => isNumberSurroundedBySymbol(lIndex, line.startIndicies.numbers[index], line.endIndicies.numbers[index]))	
-	partNumbers.push(...surroundedNumbers)
-})
-
-console.log(partNumbers.reduce((acc, val) => acc + parseInt(val), 0))
+console.log(rows)
+console.log(rowsStats)
