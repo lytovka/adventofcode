@@ -1,50 +1,37 @@
 import {input, input1} from "./input.js"
 
 const [initialSeeds, ...maps] = input.trim().split("\n\n");
-console.log(maps)
-console.log(maps.length)
 
 const parsedInitialSeeds = initialSeeds.split(":")[1].split(" ").filter(Boolean).map(a => parseInt(a));
 
-let mapsArray = Array.from({ length: maps.length }, () => new Map());
-
-maps.forEach((mapString, index) => {
-	const mapLines = mapString.split(":")[1].split("\n").filter(Boolean);
-	parseAndSetMap(mapsArray[index], mapLines);
-});
-
-function parseAndSetMap(map, mapLines) {
-	mapLines.map(aMap => {
+function parseAndSetMaps(mapLines) {
+	const mapLinesParsed = mapLines.split(":")[1].split("\n").filter(Boolean);
+	return mapLinesParsed.map(aMap => {
 		const [destination, source, range] = aMap.split(" ").map(Number);
-		console.log(destination, source, range)
-		for (let i = 0; i < range; i++) {
-			const currentKey = source + i;
-			const currentValue = destination + i;
-			map.set(currentKey, currentValue);
+		return {
+			source,
+			destination,
+			sourceEnd: source + range - 1
 		}
 	});
 }
 
-function getOrSetIfAbsent(map, key) {
-	if (!map.has(key)) {
-		map.set(key, key);
-		return key;
+const mapsParsed = maps.map(mapLines => parseAndSetMaps(mapLines))
+
+let minVal = Number.MAX_SAFE_INTEGER
+for (let val of parsedInitialSeeds){
+	let currentVal = val
+	for(let map of mapsParsed){
+		for(let m of map){
+			if (currentVal >= m.source && currentVal <= m.sourceEnd) {
+				currentVal = m.destination + (currentVal - m.source);
+				break;
+			}
+		}
 	}
-	return map.get(key);
+	if(currentVal < minVal){
+		minVal = currentVal
+	}
 }
 
-function chainGetOrSetIfAbsent(maps, initialKey) {
-	const res = [initialKey]
-	let currentKey = initialKey
-	for (let i = 0; i < maps.length; i++) {
-		const value = getOrSetIfAbsent(maps[i], currentKey)
-		res.push(value);
-		currentKey = value
-	}
-	return res;
-}
-
-const locations = parsedInitialSeeds.map(initialSeed => chainGetOrSetIfAbsent(mapsArray, initialSeed).at(-1))
-
-console.log(Math.min(...locations))
-
+console.log(minVal)
