@@ -1,17 +1,15 @@
 import {input, input1, input2 } from "./input.js"
 
-const compareSegments = (topSegment, bottomSegment) => {
-	// console.log(topSegment)
-	// console.log(bottomSegment)
-	let topLength = topSegment.length
+const compareSegments = (segment1, segment2) => {
+	let topLength = segment1.length
 	let currentCount = 0
 	let longestCount = 0
 	let j = 0
 	for (let i = topLength - 1; i >= 0; i--){
-		if(topSegment[i] === bottomSegment[j]) {
+		if(segment1[i] === segment2[j]) {
 			currentCount++
 		}
-		if(topSegment[i] !== bottomSegment[j]){
+		else {	
 			if(currentCount > longestCount){
 				longestCount = currentCount
 			}
@@ -23,8 +21,9 @@ const compareSegments = (topSegment, bottomSegment) => {
 		longestCount = currentCount;
 	}
 
-	// console.log(longestCount)
-	// console.log("----")
+	console.log(segment1)
+	console.log(segment2)
+	console.log(longestCount)
 	return longestCount;
 }
 
@@ -32,9 +31,9 @@ const findBestHorizontalMirror = (pattern) => {
 	const rows = pattern.length
 	let bestScore = 0
 	let rowsAbove = 0
-	for(let i = 1; i < rows - 1; i++){
+	for(let i = 0; i < rows; i++){
 		let topSegment = pattern.slice(0, i)
-		let bottomSegment = pattern.slice(i, rows)
+		let bottomSegment = pattern.slice(i, rows + 1)
 		let currentScore = compareSegments(topSegment, bottomSegment)
 		if(currentScore >= bestScore){
 			bestScore = currentScore 
@@ -46,11 +45,9 @@ const findBestHorizontalMirror = (pattern) => {
 
 function getColumnAsString(array, columnIndex) {
     let column = [];
-    // Loop through each row and get the element at columnIndex
     for (let i = 0; i < array.length; i++) {
         column.push(array[i][columnIndex]);
     }
-    // Join the elements into a string
     return column.join('');
 }
 
@@ -60,23 +57,27 @@ const findBestVerticalMirror = (pattern) => {
 	let colsLeft = 0
 	let columns = []
 
-	for(let i = 0; i < cols - 1; i++){
+	for(let i = 0; i < cols; i++){
 		columns.push(getColumnAsString(pattern, i))
 	}
-	for(let i = 1; i < cols - 1; i++){
+	console.log("COLUMNS")
+	console.log(columns)
+	for(let i = 0; i < cols; i++){
 		let leftSegment = columns.slice(0, i)
-		let rightSegment = columns.slice(i, cols)
+		let rightSegment = columns.slice(i, cols + 1)
 		let currentScore = compareSegments(leftSegment, rightSegment)
-		if(currentScore >= bestScore){
+		console.log(currentScore)
+		if(currentScore >= bestScore && i >= colsLeft){
 			bestScore = currentScore 
-			colsLeft = leftSegment.length
+			colsLeft = i
+			console.log("BEST", colsLeft)
 		}
 	}
 	return {bestScore, colsLeft}
 
 }
 
-const patterns = input1.trim().split("\n\n")
+const patterns = input2.trim().split("\n\n")
 
 const bestScores = []
 for(const pattern of patterns){
@@ -85,7 +86,7 @@ for(const pattern of patterns){
 	const statsVertical = findBestVerticalMirror(ps)
 	console.log(statsHorizontal)
 	console.log(statsVertical)
-	const best = statsVertical.bestScore > statsHorizontal.bestScore ? statsVertical : statsHorizontal
+	const best = statsVertical.bestScore >= statsHorizontal.bestScore ? statsVertical : statsHorizontal
 	console.log(best)
 	console.log("-------")
 	bestScores.push(best)

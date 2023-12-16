@@ -1,11 +1,10 @@
 import {input, input1} from "./input.js"
 
-const [initialSeeds, ...maps] = input.trim().split("\n\n");
+const [initialSeeds, ...maps] = input1.trim().split("\n\n");
 
 const parsedInitialSeeds = initialSeeds.split(":")[1].split(" ").filter(Boolean).map(a => parseInt(a));
 
 let seeds = []
-console.log(parsedInitialSeeds)
 
 for(let i = 1; i < parsedInitialSeeds.length; i+=2){
 	seeds.push([parsedInitialSeeds[i - 1], parsedInitialSeeds[i]])
@@ -47,6 +46,7 @@ function fromSeedToLocationValue(seedStart, range){
 	return minVal
 }
 
+console.log(Math.min(...seeds.map((input) => fromSeedToLocationValue(...input))))
 
 // 90229602
 // 60568880

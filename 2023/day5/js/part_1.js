@@ -17,7 +17,7 @@ function parseAndSetMaps(mapLines) {
 }
 
 const mapsParsed = maps.map(mapLines => parseAndSetMaps(mapLines))
-
+console.log(mapsParsed)
 let minVal = Number.MAX_SAFE_INTEGER
 for (let val of parsedInitialSeeds){
 	let currentVal = val
