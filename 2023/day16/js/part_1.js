@@ -12,18 +12,26 @@ const getEnergizedTiles = (contraption, initPos) => {
 
 	for (const [id, value] of beamsMap){
 		const [[bRow, bCol], [dRow, dCol]] = value
-		console.log(beamsMap)
+		console.log(energizedTiles.size)
+		console.log(value)
 		const tile = contraption[bRow][bCol]
+
+		if(energizedTiles.has([bRow, bCol].toString())){
+			console.log("deleting!")
+			beamsMap.delete(id)
+			continue;
+		}
+
 		if(dRow === 0 && dCol === 0){
 			beamsMap.set(crypto.randomUUID(), [[bRow, bCol + 1], [0, 1]])			
-			energizedTiles.set([bRow,bCol], value)	
+			energizedTiles.set([bRow,bCol].toString(), value)	
 			beamsMap.delete(id)
 			continue;
 		}
 		if(tile === "."){
 			if(bRow > 0 && bRow < contraption.length - 1 && bCol > 0 && bCol < contraption[bRow].length - 1){
 				beamsMap.set(crypto.randomUUID(), [[bRow + dRow, bCol + dCol], [dRow, dCol]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
@@ -37,7 +45,7 @@ const getEnergizedTiles = (contraption, initPos) => {
 				if(bRow < contraption.length - 1){
 					beamsMap.set(crypto.randomUUID(), [[bRow + 1, bCol], [1, 0]])
 				}
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
@@ -45,7 +53,7 @@ const getEnergizedTiles = (contraption, initPos) => {
 			if (dRow === 1){
 				if(bRow > 0){
 					beamsMap.set(crypto.randomUUID(), [[bRow + 1, bCol], [1, 0]])
-					energizedTiles.set([bRow,bCol], value)	
+					energizedTiles.set([bRow,bCol].toString(), value)	
 					beamsMap.delete(id)
 					continue;
 				}
@@ -54,7 +62,7 @@ const getEnergizedTiles = (contraption, initPos) => {
 			if (dRow === 0){
 				if(bRow < contraption.length - 1){
 					beamsMap.set(crypto.randomUUID(), [[bRow - 1, bCol], [-1, 0]])
-					energizedTiles.set([bRow,bCol], value)	
+					energizedTiles.set([bRow,bCol].toString(), value)	
 					beamsMap.delete(id)
 					continue;
 				}
@@ -64,35 +72,35 @@ const getEnergizedTiles = (contraption, initPos) => {
 			// approached from left
 			if(dCol === 1 && bRow < contraption.length - 1) {
 				beamsMap.set(crypto.randomUUID(), [[bRow + 1, bCol], [1, 0]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			// approached from right
 			if(dCol === -1 && bRow > 0){
 				beamsMap.set(crypto.randomUUID(), [[bRow - 1, bCol], [-1, 0]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			// approached from top
 			if(dRow === 1 && bCol < contraption[bRow].length - 1){
 				beamsMap.set(crypto.randomUUID(), [[bRow, bCol + 1], [0, 1]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			// approached from bottom
 			if(dRow === -1 && bCol > 0){
 				beamsMap.set(crypto.randomUUID(), [[bRow, bCol - 1], [0, -1]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			// approached from top
 			if(dRow === 1 && bCol > 0){
 				beamsMap.set(crypto.randomUUID(), [[bRow, bCol - 1], [0, -1]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
@@ -102,28 +110,28 @@ const getEnergizedTiles = (contraption, initPos) => {
 			// approached from left
 			if(dCol === 1 && bRow > 0){
 				beamsMap.set(crypto.randomUUID(), [[bRow - 1, bCol], [-1, 0]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			// approached from bottom
 			if(dRow === -1 && bCol < contraption[bRow].length - 1){
 				beamsMap.set(crypto.randomUUID(), [[bRow, bCol + 1], [0, 1]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			// approached from right
 			if(dCol === -1 && bRow < contraption.length - 1){
 				beamsMap.set(crypto.randomUUID(), [[bRow + 1, bCol], [1, 0]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			// approached from top
 			if(dRow === 1 && bCol > 0){
 				beamsMap.set(crypto.randomUUID(), [[bRow, bCol - 1], [0, -1]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
@@ -138,25 +146,24 @@ const getEnergizedTiles = (contraption, initPos) => {
 				if(bCol < contraption[bRow].length - 1){
 					beamsMap.set(crypto.randomUUID(), [[bRow, bCol + 1], [0, 1]])
 				}
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			// approached from either left 
 			if(dCol == 1 && bCol < contraption[dCol].length - 1) {
 				beamsMap.set(crypto.randomUUID(), [[bRow, bCol + 1], [0, 1]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 			if(dCol == -1 && bCol > 0) {
 				beamsMap.set(crypto.randomUUID(), [[bRow, bCol - 1], [0, -1]])
-				energizedTiles.set([bRow,bCol], value)	
+				energizedTiles.set([bRow,bCol].toString(), value)	
 				beamsMap.delete(id)
 				continue;
 			}
 		}
-		beamsMap.delete(id)
 	}
 
 	return energizedTiles
