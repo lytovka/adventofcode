@@ -1,4 +1,5 @@
-# Zig stuff
+.env
 
+# Zig stuff
 **/zig-cache/
 **/zig-out/
