@@ -1,5 +1,9 @@
 .env
 
+# Node stuff
+node_modules/
+dist/
+
 # Zig stuff
 **/zig-cache/
 **/zig-out/
