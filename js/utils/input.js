@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
 import fs from "node:fs";
-
-dotenv.config();
 
 async function main() {
 	const [year, day] = process.argv.slice(2);
@@ -13,14 +10,20 @@ async function main() {
 	const result = await fetch(`https://adventofcode.com/${year}/day/${day}/input`, { method: "GET", headers: { "cookie": `session=${process.env.AOC_SESSION}` } })
 
 	if (result.status !== 200) {
-		console.error('Failed to fetch input');
+		console.error('Failed to fetch input.', result.status, result.statusText);
 		return;
 	}
 
-	const input = await result.text();
-	fs.mkdirSync(`./${year}/day${day}`, { recursive: true });
-	fs.writeFileSync(`./${year}/day${day}/input.txt`, input, { flag: "a+" });
-	console.log('Input saved to file');
+	try {
+		const input = await result.text();
+		const dir = `${process.env.ROOT_DIR}/puzzles/${year}/day${day}`;
+		fs.mkdirSync(dir, { recursive: true });
+		fs.writeFileSync(`${dir}/input.txt`, input, { flag: "a+" });
+		console.log('Input saved to file:', `${dir}/input.txt`);
+	}
+	catch (error) {
+		console.error('Failed to save input to file.', error);
+	}
 }
 
 await main();

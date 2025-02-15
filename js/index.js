@@ -1,2 +1,1 @@
-
-console.log(process.env.AOC_SESSION);
+console.log("hi")
