@@ -1,6 +1,6 @@
 import fs from "node:fs";
 
-async function main() {
+export async function input() {
 	const [year, day] = process.argv.slice(2);
 	if (!year || !day) {
 		console.error('Usage: node input.js <year> <day>');
@@ -17,13 +17,14 @@ async function main() {
 	try {
 		const input = await result.text();
 		const dir = `${process.env.ROOT_DIR}/puzzles/${year}/day${day}`;
+		const filePath = `${dir}/input.txt`;
 		fs.mkdirSync(dir, { recursive: true });
-		fs.writeFileSync(`${dir}/input.txt`, input, { flag: "a+" });
-		console.log('Input saved to file:', `${dir}/input.txt`);
+		fs.writeFileSync(filePath, input, { flag: "w" });
+		console.log('Input saved to file:', filePath);
 	}
 	catch (error) {
 		console.error('Failed to save input to file.', error);
 	}
 }
 
-await main();
+await input();
