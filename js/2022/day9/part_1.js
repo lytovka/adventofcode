@@ -1,4 +1,6 @@
-import input from "./input.js";
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2022, 9);
 import {Grid2D} from "./utils.js";
 
 const grid = new Grid2D().build(input.trim());

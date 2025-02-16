@@ -20,7 +20,8 @@ export default (env) => {
 	const { year, day, part } = env;
 	const entries = { ...utilsEntries };
 	if (year && day && part) {
-		entries[`day${day}-part_${part}`] = `./${year}/day${day}/part_${part}.js`
+		const entry = `./${year}/day${day}/part_${part}`;
+		entries[entry] = `${entry}.js`
 	}
 
 	return {
