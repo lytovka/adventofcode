@@ -3,7 +3,7 @@ import path from "path";
 
 export const stringToReplace = (year, day) => {
   return `
-import { readInputFromFile } from "../../utils/readInputFromFile.js";
+import { readInputFromFile } from "~/utils/readInputFromFile.js";
 
 const input = readInputFromFile(${year}, ${day});
 	`.trim();

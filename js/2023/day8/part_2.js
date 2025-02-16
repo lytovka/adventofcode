@@ -1,5 +1,5 @@
 // This is not a right solution
-import { readInputFromFile } from "../../utils/readInputFromFile.js";
+import { readInputFromFile } from "~/utils/readInputFromFile.js";
 
 const input = readInputFromFile(2023, 8);
 
