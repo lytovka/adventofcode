@@ -9,5 +9,5 @@ export function readInputFromFile(year, day) {
     `${process.env.ROOT_DIR}/puzzles/${year}/day${day}/input.txt`,
     "utf-8",
   );
-  return input;
+  return input.trim();
 }
