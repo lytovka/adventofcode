@@ -8,11 +8,11 @@ const groupsAccumulatedCalories = groups.map((group) =>
   group
     .split("\n")
     .map((s) => parseInt(s, 10))
-    .reduce((acc, cal) => acc + cal)
+    .reduce((acc, cal) => acc + cal),
 );
 
 const groupsAccumulatedCaloriesSortedDesc = groupsAccumulatedCalories.sort(
-  (a, b) => b - a
+  (a, b) => b - a,
 );
 
 console.log(groupsAccumulatedCaloriesSortedDesc[0]);

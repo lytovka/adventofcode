@@ -10,8 +10,8 @@ const pairs = input
     line
       .split(",")
       .map((range) =>
-        range.split("-").map((rangeBound) => parseInt(rangeBound, 10))
-      )
+        range.split("-").map((rangeBound) => parseInt(rangeBound, 10)),
+      ),
   );
 
 const pairsWithSubsets = pairs.filter(([a, b]) => isSubset(a, b));

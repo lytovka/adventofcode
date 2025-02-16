@@ -129,7 +129,7 @@ class FileSystem {
           " (dir," +
           "size=" +
           this.currentNode.setSize() +
-          ")"
+          ")",
       );
       const contents = this.currentNode.getContents();
       if (!Array.isArray(contents) || contents.length === 0) return;

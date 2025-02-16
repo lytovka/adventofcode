@@ -7,7 +7,8 @@
     "build": "bash ./build.sh",
     "puzzle": "node ./utils/puzzle.js",
     "input": "node ./dist/utils/input.js",
-    "solve": "bash ./solve.sh"
+    "solve": "bash ./solve.sh",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "dotenv": "^16.4.7",
     "dotenv-webpack": "^8.1.0",
+    "prettier": "3.5.1",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1"
   }

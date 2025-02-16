@@ -125,4 +125,4 @@ class Grid2D {
   }
 }
 
-export {Point, Grid2D};
+export { Point, Grid2D };
