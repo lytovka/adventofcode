@@ -2,17 +2,23 @@ import { readInputFromFile } from "../../utils/readInputFromFile.js";
 
 const input = readInputFromFile(2023, 4);
 
-const rows = input.trim().split("\n")
-const numberRegex = /\d+/g
+const rows = input.trim().split("\n");
+const numberRegex = /\d+/g;
 
-const cardMatches = rows.map(row => {
-	const [_, input] = row.split(":")
-	const [winningNumbers, myNumbers] = input.trim().split("|")
-	const parsedWinningNumbers = winningNumbers.match(numberRegex)
-	const parsedMyNumbers = myNumbers.match(numberRegex)
+const cardMatches = rows.map((row) => {
+  const [_, input] = row.split(":");
+  const [winningNumbers, myNumbers] = input.trim().split("|");
+  const parsedWinningNumbers = winningNumbers.match(numberRegex);
+  const parsedMyNumbers = myNumbers.match(numberRegex);
 
-	return parsedMyNumbers.filter(myNumber => parsedWinningNumbers.some(winningNumber => winningNumber === myNumber))
-})
+  return parsedMyNumbers.filter((myNumber) =>
+    parsedWinningNumbers.some((winningNumber) => winningNumber === myNumber),
+  );
+});
 
-console.log(cardMatches)
-console.log(cardMatches.map(matches => matches.length > 0 ? 1 << matches.length - 1 : 0).reduce((acc, val) => acc + val, 0))
+console.log(cardMatches);
+console.log(
+  cardMatches
+    .map((matches) => (matches.length > 0 ? 1 << (matches.length - 1) : 0))
+    .reduce((acc, val) => acc + val, 0),
+);

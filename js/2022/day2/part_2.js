@@ -41,7 +41,7 @@ const winLoseDrawStats = rounds.map(([oppSelection, desiredOutcome]) => {
 
 const scores = winLoseDrawStats.map(
   ([outcome, mySelection]) =>
-    winLoseDrawScores[outcome] + elementScores[mySelection]
+    winLoseDrawScores[outcome] + elementScores[mySelection],
 );
 const totalScore = scores.reduce((acc, score) => acc + score);
 

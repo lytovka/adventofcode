@@ -10,8 +10,8 @@ const ranges = input
     line
       .split(",")
       .map((range) =>
-        range.split("-").map((rangeBound) => parseInt(rangeBound, 10))
-      )
+        range.split("-").map((rangeBound) => parseInt(rangeBound, 10)),
+      ),
   );
 
 console.log(ranges);

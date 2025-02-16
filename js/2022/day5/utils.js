@@ -6,7 +6,7 @@ const generateArrayOfStacks = (indices) =>
     {
       length: indices.trim().split(/\s+/).length,
     },
-    () => []
+    () => [],
   );
 
 const parseAndSaveScheme = (rawScheme, res) => {
@@ -29,4 +29,10 @@ const parseMoves = (rawMoves) =>
     };
   });
 
-export { pattern, patternLength, generateArrayOfStacks, parseAndSaveScheme, parseMoves };
+export {
+  pattern,
+  patternLength,
+  generateArrayOfStacks,
+  parseAndSaveScheme,
+  parseMoves,
+};

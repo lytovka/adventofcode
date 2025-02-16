@@ -18,4 +18,3 @@ for (let localDir of dirs) {
 }
 
 console.log(res);
-
