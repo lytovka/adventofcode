@@ -1,4 +1,4 @@
-async function main() {
+export async function puzzle() {
 	const [year, day] = process.argv.slice(2);
 	if (!year || !day) {
 		console.error('Usage: node puzzle.js <year> <day>');
@@ -19,8 +19,10 @@ async function main() {
 		return;
 	}
 	const puzzle = match[1].replace(/<[^>]*>/g, '');
+
 	console.log(puzzle);
 }
 
-await main();
+await puzzle();
+
 
