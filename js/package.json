@@ -4,9 +4,10 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "webpack",
-    "adventofcode:puzzle": "node ./utils/puzzle.js",
-    "adventofcode:input": "npm run build && node ./dist/input.js"
+    "build": "bash ./build.sh",
+    "puzzle": "node ./utils/puzzle.js",
+    "input": "node ./dist/utils/input.js",
+    "solve": "bash ./solve.sh"
   },
   "repository": {
     "type": "git",
