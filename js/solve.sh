@@ -15,4 +15,4 @@ if [[ -z "$3" || ( "$3" -ne 1 && "$3" -ne 2 ) ]]; then
   exit 1
 fi
 
-bash ./build.sh $1 $2 $3 && node ./dist/$1-day$2-part_$3.js
+bash ./build.sh $1 $2 $3 && node ./dist/$1/day$2/part_$3.js

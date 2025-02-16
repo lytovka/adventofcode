@@ -1,4 +1,6 @@
-import input from "./input.js";
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2022, 1);
 
 const groups = input.trim().split("\n\n");
 
@@ -15,6 +17,6 @@ const groupsAccumulatedCaloriesSortedDesc = groupsAccumulatedCalories.sort(
 
 console.log(
   groupsAccumulatedCaloriesSortedDesc[0] +
-    groupsAccumulatedCaloriesSortedDesc[1] +
-    groupsAccumulatedCaloriesSortedDesc[2]
+  groupsAccumulatedCaloriesSortedDesc[1] +
+  groupsAccumulatedCaloriesSortedDesc[2]
 );

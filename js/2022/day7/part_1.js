@@ -1,4 +1,6 @@
-import input from "./input.js";
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2022, 7);
 import { FileSystem, Directory } from "./utils.js";
 
 const lines = input.split("\n");
