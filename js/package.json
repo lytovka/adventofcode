@@ -4,10 +4,10 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "bash ./build.sh",
+    "build": "bash ./scripts/build.sh",
     "puzzle": "node ./utils/puzzle.js",
     "input": "node ./dist/utils/input.js",
-    "solve": "bash ./solve.sh",
+    "solve": "bash ./scripts/solve.sh",
     "format": "prettier --write ."
   },
   "repository": {

@@ -1,4 +1,5 @@
-export async function main() {
+export async function submit() {
+  // https://adventofcode.com/2024/day/1/answer
   console.log(process.argv);
   const [result] = process.argv.slice(2);
   if (!result) {
@@ -8,3 +9,5 @@ export async function main() {
 
   console.log(result);
 }
+
+await submit();
