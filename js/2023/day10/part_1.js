@@ -3,7 +3,6 @@ import { readInputFromFile } from "~/utils/readInputFromFile.js";
 const input = readInputFromFile(2023, 10);
 
 const parsedGrid = input.trim().split("\n");
-console.log(input1);
 
 // find coord of character `S`
 const findAnimalCoords = (grid) => {
