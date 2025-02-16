@@ -1,4 +1,6 @@
-import input from "./input.js"
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2023, 1);
 
 const stringToDigit = {
 	"one": "1",

@@ -1,4 +1,6 @@
-import { input1, input } from "./input.js"
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2023, 3);
 
 const rows = input1.trim().split("\n")
 const numberRegex = /\d+/g

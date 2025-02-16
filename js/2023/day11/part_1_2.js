@@ -1,4 +1,6 @@
-import {input1, input} from "./input.js"
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2023, 11);
 
 const findExpansionVectors = (grid) => {
 	const expandX = grid.map((row) => (/#/.test(row) ? 0 : 1));

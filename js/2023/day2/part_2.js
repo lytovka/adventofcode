@@ -1,4 +1,6 @@
-import input from "./input.js"
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2023, 2);
 
 const gameEntries = input.trim().split("\n").map(row => row.split(":"))
 const sequenceRegex = /(\d+ (blue|green|red))/g
