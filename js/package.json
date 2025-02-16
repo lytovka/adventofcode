@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "build": "bash ./scripts/build.sh",
-    "puzzle": "node ./utils/puzzle.js",
-    "input": "node ./dist/utils/input.js",
+    "puzzle": "npm run build && node ./dist/utils/puzzle.js",
+    "input": "npm run build && node ./dist/utils/input.js",
     "solve": "bash ./scripts/solve.sh",
+    "submit": "npm run build && node ./dist/utils/submit.js",
     "format": "prettier --write ."
   },
   "repository": {
