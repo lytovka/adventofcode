@@ -1,4 +1,6 @@
-import {input, input1, input2 } from "./input.js"
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2023, 13);
 
 const compareSegments = (segment1, segment2) => {
 	let topLength = segment1.length

@@ -1,4 +1,6 @@
-import {input, input1} from "./input.js"
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2023, 18);
 
 const DIRECTIONS = {
 	"0": "R",

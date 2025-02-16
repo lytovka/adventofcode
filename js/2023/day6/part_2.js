@@ -1,4 +1,6 @@
-import {input, input1} from "./input.js"
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2023, 6);
 
 const [time, distance] = input.trim().split("\n").map(line => line.match(/\d+/g).reduce((acc, number) => acc + number))
 

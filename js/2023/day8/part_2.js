@@ -1,6 +1,7 @@
 // This is not a right solution
-/
-import {input2, input} from "./input.js"
+import { readInputFromFile } from "../../utils/readInputFromFile.js";
+
+const input = readInputFromFile(2023, 8);
 
 const [sequenceRaw, directionMapsRaw] = input2.trim().split("\n\n")
 
@@ -18,8 +19,8 @@ let currentSteps = [...directionMap.keys()]
 let counter = 0
 let current = "AAA"
 const ic = sequence.length
-while(current !== "ZZZ"){
-	const instruction = sequence[counter % ic] === 'L' ? 0 : 1; 
+while (current !== "ZZZ") {
+	const instruction = sequence[counter % ic] === 'L' ? 0 : 1;
 	current = directionMap.get(current)[instruction]
 	counter++
 }
