@@ -45,6 +45,11 @@ export default (env) => {
     stats: {
       errorDetails: true,
     },
+    resolve: {
+      alias: {
+        "~/*": path.resolve(__dirname, "./*"),
+      },
+    },
     plugins: [
       new webpack.DefinePlugin({
         "process.env": JSON.stringify(process.env), // Injects all environment variables
