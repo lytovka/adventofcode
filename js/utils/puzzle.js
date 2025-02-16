@@ -5,9 +5,13 @@ export async function puzzle() {
     return;
   }
 
-  const response = await fetch(`https://adventofcode.com/${year}/day/${day}`, {
-    method: "GET",
-  });
+  const response = await fetch(
+    `${process.env.AOC_BASE_URL}/${year}/day/${day}`,
+    {
+      method: "GET",
+      headers: { cookie: `session=${process.env.AOC_SESSION}` },
+    },
+  );
 
   if (response.status !== 200) {
     console.error("Failed to fetch puzzle");
@@ -20,6 +24,7 @@ export async function puzzle() {
     console.error("Failed to parse puzzle");
     return;
   }
+  console.log(match.length);
   const puzzle = match[1].replace(/<[^>]*>/g, "");
 
   console.log(puzzle);
