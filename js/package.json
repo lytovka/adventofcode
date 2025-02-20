@@ -10,6 +10,7 @@
     "input": "npm run build && node ./dist/utils/input.js",
     "solve": "bash ./scripts/solve.sh",
     "submit": "npm run build && node ./dist/utils/submit.js",
+    "open": "bash ./scripts/open-browser.sh",
     "format": "prettier --write ."
   },
   "repository": {
