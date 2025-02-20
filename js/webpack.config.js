@@ -17,8 +17,6 @@ const utilsEntries = fs
     return acc;
   }, {});
 
-console.log("utilsEntries", utilsEntries);
-
 export default (env) => {
   const { year, day, part } = env;
   const entries = { ...utilsEntries };
@@ -42,9 +40,7 @@ export default (env) => {
     resolve: {
       extensions: [".js"],
     },
-    stats: {
-      errorDetails: true,
-    },
+    stats: "minimal",
     resolve: {
       alias: {
         "~/*": path.resolve(__dirname, "./*"),
