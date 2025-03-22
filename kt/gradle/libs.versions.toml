@@ -1,0 +1,8 @@
+[versions]
+kotestVersion = "5.9.0"
+
+[libraries]
+kotlin-kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotestVersion" }
+
+[bundles]
+kotlin-test = ["kotlin-kotest"]
