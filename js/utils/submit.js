@@ -1,9 +1,15 @@
 export async function submit() {
   const [year, day, part, answer] = process.argv.slice(2);
+  const { AOC_BASE_URL, AOC_SESSION } = process.env
 
   if (!year || !day || !part || !answer) {
     console.error("Usage: node submit.js <year> <day> <part> <answer>");
-    return;
+    process.exit(1)
+  }
+
+  if(!AOC_SESSION || !AOC_BASE_URL) {
+    console.error("Make sure all environment variables are set in the .env file")
+    process.exit(2)
   }
 
   const response = await fetch(

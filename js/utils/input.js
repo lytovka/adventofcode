@@ -4,7 +4,7 @@ export async function input() {
   const [year, day] = process.argv.slice(2);
   if (!year || !day) {
     console.error("Usage: node input.js <year> <day>");
-    return;
+    process.exit(1)
   }
 
   const result = await fetch(
@@ -17,7 +17,7 @@ export async function input() {
 
   if (result.status !== 200) {
     console.error("Failed to fetch input.", result.status, result.statusText);
-    return;
+    process.exit(2)
   }
 
   try {

@@ -2,7 +2,12 @@ export async function puzzle() {
   const [year, day] = process.argv.slice(2);
   if (!year || !day) {
     console.error("Usage: node puzzle.js <year> <day>");
-    return;
+    process.exit(1)
+  }
+
+  if(!process.env.AOC_SESSION) {
+    console.error("AOC_SESSION is not defined in .env file")
+    process.exit(2)
   }
 
   const response = await fetch(
@@ -15,7 +20,7 @@ export async function puzzle() {
 
   if (response.status !== 200) {
     console.error("Failed to fetch puzzle");
-    return;
+    process.exit(3)
   }
 
   const text = await response.text();
@@ -28,6 +33,7 @@ export async function puzzle() {
   const puzzle = match[1].replace(/<[^>]*>/g, "");
 
   console.log(puzzle);
+  process.exit(0)
 }
 
 await puzzle();
