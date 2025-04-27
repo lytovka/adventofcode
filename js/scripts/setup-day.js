@@ -25,7 +25,7 @@ async function setup() {
   const dir = path.resolve(__dirname, `../${year}/day${day}`);
 
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, {recursive: true});
+    fs.mkdirSync(dir, { recursive: true });
   }
 
   const filePath = path.resolve(dir, `part_${part}.js`);
