@@ -10,9 +10,12 @@ export async function input() {
     process.exit(1);
   }
 
-  const result = await http.get(`${process.env.AOC_BASE_URL}/${year}/day/${day}/input`, {
-    cookie: `session=${process.env.AOC_SESSION}`,
-  });
+  const result = await http.get(
+    `${process.env.AOC_BASE_URL}/${year}/day/${day}/input`,
+    {
+      cookie: `session=${process.env.AOC_SESSION}`,
+    },
+  );
   if (!result.ok) {
     console.error(result.error);
     process.exit(2);
