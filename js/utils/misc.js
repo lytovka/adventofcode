@@ -4,6 +4,7 @@ export const EXIT_CODES = {
   INVALID_ARGS: 2,
   API_ERROR: 3,
   IO_ERROR: 4,
+  OTHER: 5,
 };
 
 export function getCliArgs(...argNames) {

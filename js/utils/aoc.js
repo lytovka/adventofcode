@@ -1,7 +1,7 @@
 import { assertRequiredEnvs } from "./misc.js";
 import HttpHelper from "./http.js";
 
-class AoCService {
+class AoC {
   constructor() {
     const { sessionToken, baseUrl } = assertRequiredEnvs();
     this.baseUrl = baseUrl;
@@ -32,6 +32,4 @@ class AoCService {
   }
 }
 
-const aocService = new AoCService();
-
-export default aocService;
+export default new AoC();
