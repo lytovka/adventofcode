@@ -1,25 +1,10 @@
-import HttpHelper from "./http.js";
-
-const http = new HttpHelper();
+import { assertRequiredEnvs, getCliArgs } from "./misc.js";
+import aocService from "./AoCService.js";
 
 export async function puzzle() {
-  const [year, day] = process.argv.slice(2);
-  if (!year || !day) {
-    console.error("Usage: node puzzle.js <year> <day>");
-    process.exit(1);
-  }
-
-  if (!process.env.AOC_SESSION) {
-    console.error("AOC_SESSION is not defined in .env file");
-    process.exit(2);
-  }
-
-  const result = await http.get(
-    `${process.env.AOC_BASE_URL}/${year}/day/${day}`,
-    {
-      cookie: `session=${process.env.AOC_SESSION}`,
-    },
-  );
+  assertRequiredEnvs();
+  const [year, day] = getCliArgs("year", "day");
+  const result = await aocService.fetchPuzzle(year, day);
   if (!result.ok) {
     console.error(result.error);
     process.exit(3);
