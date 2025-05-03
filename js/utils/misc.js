@@ -15,7 +15,7 @@ export function getCliArgs(...argNames) {
   if (args.length !== argNames.length) {
     console.error(
       "Expected CLI arguments: " +
-        argNames.map((name) => `<${name}>`).join(", "),
+        argNames.map((name) => `<${name}>`).join(" "),
     );
     process.exit(EXIT_CODES.INVALID_ARGS);
   }

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "bash ./scripts/build.sh",
     "puzzle": "npm run build && node ./dist/utils/puzzle.js",
-    "setup-day": "node ./scripts/setup-day.js",
+    "setup": "npm run build && node ./dist/utils/setup.js",
     "input": "npm run build && node ./dist/utils/input.js",
     "solve": "bash ./scripts/solve.sh",
     "submit": "npm run build && node ./dist/utils/submit.js",
