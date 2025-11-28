@@ -1,4 +1,5 @@
 plugins {
+    `hello-world-plugin`
     kotlin("jvm") version "2.1.0"
 }
 
@@ -12,7 +13,11 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("reflect"))
+    implementation(libs.kotlin.logger)
+    implementation(libs.slf4j.api)
+    implementation(libs.slf4j.simple)
+
+    // Test dependencies
     testImplementation(kotlin("test"))
     testImplementation(libs.bundles.kotlin.test)
 }
@@ -39,9 +44,6 @@ abstract class MyCopyTask : DefaultTask() {
 }
 
 tasks{
-    test {
-    useJUnitPlatform()
-    }
     register("solve") {
         group = "adventofcode"
         description = "solve the puzzle for specific year, day, and level"

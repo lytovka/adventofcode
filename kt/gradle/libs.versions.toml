@@ -1,8 +1,14 @@
 [versions]
 kotestVersion = "5.9.0"
+kotlinLoggerVersion = "7.0.3"
+slf4jVersion = "2.0.5"
 
 [libraries]
 kotlin-kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotestVersion" }
+kotlin-logger = { module = "io.github.oshai:kotlin-logging-jvm", version.ref ="kotlinLoggerVersion" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4jVersion" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4jVersion" }
+
 
 [bundles]
 kotlin-test = ["kotlin-kotest"]
