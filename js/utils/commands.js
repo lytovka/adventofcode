@@ -1,11 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
-import { EXIT_CODES, getCliArgs } from "./misc.js";
+import { exec } from "node:child_process"
+import { EXIT_CODES } from "./misc.js";
 import aocService from "./aoc.js";
 
 class CliCommands {
-  async getInput() {
-    const [year, day] = getCliArgs("year", "day");
+  async getInput(year, day) {
     const result = await aocService.fetchInput(year, day);
     if (!result.ok) {
       console.error(result.error);
@@ -23,10 +23,10 @@ class CliCommands {
     }
   }
 
-  async setupJsFile() {
+  async setupJsFile(year, day, part) {
     const content = (year, day) => {
       return `
-import { readInputFromFile } from "~/utils/readInputFromFile.js";
+import { readInputFromFile } from "~/utils/misc.js";
 
 const input = readInputFromFile(${year}, ${day});
 
@@ -34,7 +34,6 @@ console.log(input);
   `.trim();
     };
 
-    const [year, day, part] = getCliArgs("year", "day", "part");
     const dir = `${process.env.ROOT_DIR}/js/${year}/day${day}`;
 
     if (!fs.existsSync(dir)) {
@@ -49,9 +48,8 @@ console.log(input);
     return `File created: ${filePath}`;
   }
 
-  async getPuzzle() {
-    const args = getCliArgs("year", "day");
-    const result = await aocService.fetchPuzzle(...args);
+  async getPuzzle(year, day) {
+    const result = await aocService.fetchPuzzle(year, day);
     if (!result.ok) {
       console.error(result.error);
       process.exit(EXIT_CODES.API_ERROR);
@@ -64,14 +62,17 @@ console.log(input);
     return match[1].replace(/<[^>]*>/g, "");
   }
 
-  async submitPuzzle() {
-    const args = getCliArgs("year", "day", "part", "answer");
-    const result = await aocService.submitAnswer(...args);
+  async submitPuzzle(year, day, part, answer) {
+    const result = await aocService.submitAnswer(year, day, part, answer);
     if (!result.ok) {
       console.error(result.error);
       process.exit(EXIT_CODES.API_ERROR);
     }
     return result.payload;
+  }
+
+  openBrowserPage(year, day) {
+    exec(`open "${process.env.AOC_BASE_URL}/${year}/day/${day}"`)
   }
 }
 

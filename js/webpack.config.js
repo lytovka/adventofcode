@@ -1,32 +1,33 @@
-import path from "path";
-import fs from "fs";
+import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import webpack from "webpack";
+import { glob } from "glob"
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const utilsEntries = fs
-  .readdirSync(path.resolve(__dirname, "./utils"), "utf-8")
-  .filter((file) => file.endsWith(".js"))
+const solutions = glob.sync(__dirname + `/20**/**/*.js`)
   .reduce((acc, file) => {
-    acc[`utils/${file.replace(/\.js$/, "")}`] = `./utils/${file}`;
+    const p = file.replace(/\.js$/, "").replace(__dirname, "")
+    acc[p] = file;
     return acc;
   }, {});
 
-export default (env) => {
-  const { year, day, part } = env;
-  const entries = { ...utilsEntries };
-  if (year && day && part) {
-    const entry = `./${year}/day${day}/part_${part}`;
-    entries[entry] = `${entry}.js`;
-  }
-
+/**
+ * @type {import ("webpack").Configuration}
+ */
+export default () => {
+  /**
+   * @type {import ("webpack").Configuration}
+   */
   return {
-    entry: entries,
+    cache: true,
+    entry: {
+      cli: path.resolve(__dirname, "./cli.js"),
+      ...solutions
+    },
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "[name].js",

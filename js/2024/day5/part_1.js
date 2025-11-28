@@ -1,4 +1,4 @@
-import { readInputFromFile } from "~/utils/readInputFromFile.js";
+import { readInputFromFile } from "~/utils/misc.js";
 
 const [priorities, sequences] = readInputFromFile(2024, 5).split("\n\n");
 

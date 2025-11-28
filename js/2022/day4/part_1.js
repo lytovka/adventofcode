@@ -1,4 +1,4 @@
-import { readInputFromFile } from "~/utils/readInputFromFile.js";
+import { readInputFromFile } from "~/utils/misc.js";
 
 const input = readInputFromFile(2022, 4);
 import { isSubset } from "./utils.js";

@@ -1,4 +1,4 @@
-import { readInputFromFile } from "~/utils/readInputFromFile.js";
+import { readInputFromFile } from "~/utils/misc.js";
 
 const input = readInputFromFile(2024, 4).split("\n");
 const acceptedAnswer = new Set(["MAS", "SAM"]);
