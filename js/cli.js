@@ -30,5 +30,11 @@ program
   .action(async (year, day, part, answer) => {
     commands.submitPuzzle(year, day, part, answer).then(console.log, console.error)
   })
+program
+  .command("open")
+  .arguments("<year> <day>")
+  .action(async (year, day) => {
+    commands.openBrowserPage(year, day)
+  })
 
 program.parse(process.argv)

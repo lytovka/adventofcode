@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { exec } from "node:child_process"
 import { EXIT_CODES } from "./misc.js";
 import aocService from "./aoc.js";
 
@@ -68,6 +69,10 @@ console.log(input);
       process.exit(EXIT_CODES.API_ERROR);
     }
     return result.payload;
+  }
+
+  openBrowserPage(year, day) {
+    exec(`open "${process.env.AOC_BASE_URL}/${year}/day/${day}"`)
   }
 }
 
