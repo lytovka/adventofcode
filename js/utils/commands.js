@@ -26,7 +26,7 @@ class CliCommands {
   async setupJsFile(year, day, part) {
     const content = (year, day) => {
       return `
-import { readInputFromFile } from "~/utils/readInputFromFile.js";
+import { readInputFromFile } from "~/utils/misc.js";
 
 const input = readInputFromFile(${year}, ${day});
 

@@ -1,4 +1,4 @@
-import { readInputFromFile } from "~/utils/readInputFromFile.js";
+import { readInputFromFile } from "~/utils/misc.js";
 
 const getOrder = (num1, num2) => {
   return num1 > num2 ? "d" : num1 < num2 ? "i" : "n";

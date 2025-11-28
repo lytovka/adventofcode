@@ -1,3 +1,5 @@
+import fs from "node:fs";
+
 export const EXIT_CODES = {
   SUCCESS: 0,
   MISSING_ENV: 1,
