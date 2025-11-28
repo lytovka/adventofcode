@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "bash ./scripts/build.sh",
+    "build": "webpack --config webpack.config.js",
     "open": "bash ./scripts/open-browser.sh",
     "aoc": "node ./dist/cli.js",
     "format": "prettier --write ."

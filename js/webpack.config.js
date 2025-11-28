@@ -18,14 +18,7 @@ const solutions = glob.sync(__dirname + `/20**/**/*.js`)
 /**
  * @type {import ("webpack").Configuration}
  */
-export default (env) => {
-  const { year, day, part } = env;
-  const additionalEntries = {}
-  if (year && day && part) {
-    const entry = `./${year}/day${day}/part_${part}`;
-    additionalEntries[entry] = `${entry}.js`;
-  }
-
+export default () => {
   /**
    * @type {import ("webpack").Configuration}
    */
@@ -33,7 +26,6 @@ export default (env) => {
     cache: true,
     entry: {
       cli: path.resolve(__dirname, "./cli.js"),
-      ...additionalEntries,
       ...solutions
     },
     output: {
