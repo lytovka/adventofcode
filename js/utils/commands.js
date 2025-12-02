@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { exec } from "node:child_process"
+import { exec } from "node:child_process";
 import { EXIT_CODES } from "./misc.js";
 import aocService from "./aoc.js";
 
@@ -72,7 +72,7 @@ console.log(input);
   }
 
   openBrowserPage(year, day) {
-    exec(`open "${process.env.AOC_BASE_URL}/${year}/day/${day}"`)
+    exec(`open "${process.env.AOC_BASE_URL}/${year}/day/${day}"`);
   }
 }
 

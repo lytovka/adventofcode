@@ -2,18 +2,17 @@ import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import webpack from "webpack";
-import { glob } from "glob"
+import { glob } from "glob";
 
 dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const solutions = glob.sync(__dirname + `/20**/**/*.js`)
-  .reduce((acc, file) => {
-    const p = file.replace(/\.js$/, "").replace(__dirname, "")
-    acc[p] = file;
-    return acc;
-  }, {});
+const solutions = glob.sync(__dirname + `/20**/**/*.js`).reduce((acc, file) => {
+  const p = file.replace(/\.js$/, "").replace(__dirname, "");
+  acc[p] = file;
+  return acc;
+}, {});
 
 /**
  * @type {import ("webpack").Configuration}
@@ -26,7 +25,7 @@ export default () => {
     cache: true,
     entry: {
       cli: path.resolve(__dirname, "./cli.js"),
-      ...solutions
+      ...solutions,
     },
     output: {
       path: path.resolve(__dirname, "dist"),
