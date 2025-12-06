@@ -20,7 +20,7 @@ program
   .command("solve")
   .arguments("<year> <day> <part>")
   .action(async (year, day, part) => {
-    await import(/*webpackIgnore: true*/ `./${year}/day${day}/part_${part}.js`);
+    await import(/*webpackIgnore: true*/ `../${year}/day${day}/part_${part}.js`);
   });
 program
   .command("setup")

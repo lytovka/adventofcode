@@ -1,4 +1,4 @@
-import { readInputFromFile } from "~/utils/misc.js";
+import { readInputFromFile } from "../../utils/misc.js";
 
 const input = readInputFromFile(2022, 2);
 

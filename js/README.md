@@ -90,7 +90,7 @@ js/
 ## Solution Template
 
 ```javascript
-import { readInputFromFile } from "~/utils/misc.js";
+import { readInputFromFile } from "../../utils/misc.js";
 
 const input = readInputFromFile(2024, 1);
 
