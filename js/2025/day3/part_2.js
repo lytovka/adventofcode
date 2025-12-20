@@ -6,16 +6,16 @@ const input2 = `
 811111111111119
 234234234234278
 818181911112111
-`
-const NUMBER_LENGTH = 12
+`;
+const NUMBER_LENGTH = 12;
 
 // 8 1 8 1 8 1 9 1 1 1  1  2  1  1  1
 // 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
-// 
+//
 // result: 888911112111
 //
-// need: 12 
-// possible candidate range at position i: [i, n-(12-p)], where p is the index of the resulting list of picked values   
+// need: 12
+// possible candidate range at position i: [i, n-(12-p)], where p is the index of the resulting list of picked values
 //
 // iteration 0
 // i: 0
@@ -53,24 +53,27 @@ const NUMBER_LENGTH = 12
 // p: 3
 // [5, 15-(12-3)=6] = [1,9]
 // res = [8,8,8]
-const banks = input.trim().split("\n")
+const banks = input.trim().split("\n");
 
-let res = []
+let res = [];
 banks.forEach((bank) => {
-  const stack = []
+  const stack = [];
   for (let i = 0; i < bank.length && stack.length < NUMBER_LENGTH; i++) {
-    const digit = parseInt(bank[i])
-    const candidates = bank.slice(i, bank.length - (NUMBER_LENGTH - stack.length) + 1)
+    const digit = parseInt(bank[i]);
+    const candidates = bank.slice(
+      i,
+      bank.length - (NUMBER_LENGTH - stack.length) + 1,
+    );
     if (candidates.length === 0) {
-      stack.push(digit)
+      stack.push(digit);
       continue;
     }
-    const max = Math.max(...candidates)
+    const max = Math.max(...candidates);
     if (digit === max) {
-      stack.push(digit)
+      stack.push(digit);
     }
   }
-  res.push(parseInt(stack.join("")))
-})
+  res.push(parseInt(stack.join("")));
+});
 
 console.log(res.reduce((acc, val) => acc + val, 0));

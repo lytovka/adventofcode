@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import path from "node:path"
+import path from "node:path";
 
 export const EXIT_CODES = {
   SUCCESS: 0,
@@ -29,8 +29,8 @@ export function readInputFromFile(year, day) {
   if (!year || !day) {
     throw new Error("Year and day must be provided");
   }
-  const root = path.dirname(process.cwd())
-  const p = path.resolve(root, `puzzles/${year}/day${day}/input.txt`)
+  const root = path.dirname(process.cwd());
+  const p = path.resolve(root, `puzzles/${year}/day${day}/input.txt`);
   const input = fs.readFileSync(p, "utf-8");
   return input.trim();
 }
